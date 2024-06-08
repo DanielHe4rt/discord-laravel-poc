@@ -13,3 +13,11 @@ members_count: int
 messages_count: int
 is_nsfw: bool
 
+
+## Members
+
+
+id: uuid
+guild_id: uuid referenecs
+user_id:  uuid references
+messages_count: 

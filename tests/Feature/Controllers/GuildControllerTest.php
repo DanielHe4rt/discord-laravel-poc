@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\Guild;
+use App\Models\Member;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -35,5 +36,21 @@ class GuildControllerTest extends TestCase
 
         $this->assertDatabaseHas(Guild::class ,$payload);
 
+    }
+
+    public function test_owner_joins_a_guild_after_being_created()
+    {
+        // Prepare
+
+        $guild = Guild::factory()->create(['members_count' => 0]);
+
+        $this->assertDatabaseHas(Member::class, [
+            'guild_id' => $guild->getKey(),
+            'user_id' => $guild->user->getKey()
+        ]);
+
+        $this->assertDatabaseHas(Guild::class, [
+            'members_count' => 1
+        ]);
     }
 }

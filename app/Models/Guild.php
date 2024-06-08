@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
+use App\Enums\UnaryEnum;
+use App\Observers\GuildObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
+#[ObservedBy(GuildObserver::class)]
 class Guild extends Model
 {
     use HasFactory, HasUuids;
@@ -24,6 +30,19 @@ class Guild extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function members(): HasMany
+    {
+        return $this->hasMany(Member::class, 'guild_id');
+    }
+
+    public function incrementMembers(UnaryEnum $enum): bool
+    {
+        return match($enum) {
+            UnaryEnum::Increment => $this->increment('members_count'),
+            UnaryEnum::Decrement => $this->decrement('members_count'),
+        };
     }
 
 }
