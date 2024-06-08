@@ -27,9 +27,9 @@ class Guild extends Model
         'is_nsfw'
     ];
 
-    public function user(): BelongsTo
+    public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function members(): HasMany

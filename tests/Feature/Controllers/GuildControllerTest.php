@@ -40,17 +40,29 @@ class GuildControllerTest extends TestCase
 
     public function test_owner_joins_a_guild_after_being_created()
     {
-        // Prepare
-
         $guild = Guild::factory()->create(['members_count' => 0]);
 
         $this->assertDatabaseHas(Member::class, [
             'guild_id' => $guild->getKey(),
-            'user_id' => $guild->user->getKey()
+            'user_id' => $guild->owner->getKey()
         ]);
 
         $this->assertDatabaseHas(Guild::class, [
             'members_count' => 1
         ]);
+    }
+
+    public function test_can_visualize_servers()
+    {
+        $this->withoutExceptionHandling();
+        $guild = Guild::factory()->create();
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('guilds.index'));
+
+        $response->assertOk()
+            ->assertSee($guild->name);
     }
 }
