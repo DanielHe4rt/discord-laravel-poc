@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\Guild;
 use App\Services\GuildService;
 use Illuminate\Http\RedirectResponse;
@@ -24,9 +25,14 @@ class GuildController extends Controller
         ]);
     }
 
-    public function getGuild(Guild $guild)
+    public function getGuild(Guild $guild): View
     {
-        // TODO: implement
+        Channel::factory()->create(['guild_id' => $guild->id]);
+
+        return view('guilds.show-guild', [
+            'guild' => $guild,
+            'channels' => $guild->channels()->paginate(10)
+        ]);
     }
 
     public function postGuild(Request $request): RedirectResponse

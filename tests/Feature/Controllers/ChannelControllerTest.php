@@ -4,6 +4,7 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Channel;
 use App\Models\Guild;
+use http\Client\Curl\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -28,5 +29,21 @@ class ChannelControllerTest extends TestCase
 
         $response->assertRedirectToRoute('guilds.show', $guild);
         $this->assertDatabaseHas(Channel::class, $payload);
+    }
+
+    public function test_user_can_join_a_channel(): void
+    {
+        $this->withoutExceptionHandling();
+        $channel = Channel::factory()->create();
+
+        $response = $this
+            ->actingAs($channel->guild->owner)
+            ->get(route('guilds.channels.show', [
+                'guild' => $channel->guild,
+                'channel' => $channel
+            ]));
+
+        $response->assertOk()
+            ->assertSee($channel->name);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\Guild;
 use App\Services\ChannelService;
 use Illuminate\Http\RedirectResponse;
@@ -19,5 +20,14 @@ class ChannelController extends Controller
     {
         $this->channelService->create($guild, $request->all());
         return redirect()->route('guilds.show', $guild);
+    }
+
+    public function getChannel(Guild $guild, Channel $channel)
+    {
+
+        return view('guilds.channels.show-channel', [
+            'channel' => $channel,
+            'guild' => $guild,
+        ]);
     }
 }

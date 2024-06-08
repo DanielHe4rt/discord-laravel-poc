@@ -20,21 +20,19 @@
         <div class="album py-5 bg-body-tertiary">
             <div class="container">
                 <div class="row ">
-                    @foreach($guilds as $guild)
+                    @foreach($channels as $channel)
 
                         <div class="col-3">
                             <div class="card shadow-sm">
-                                <img src="{{ $guild->icon_url }}" alt="" class="bd-placeholder-img card-img-top"
-                                     width="100%" height="225">
                                 <div class="card-body">
                                     <p class="card-text">
-                                        {{ $guild->name }}
+                                        {{ $channel->name }}
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="{{ route('guilds.show', $guild) }}" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                            <a href="{{ route('guilds.channels.show', ['guild' => $guild, 'channel', $channel]) }}" type="button" class="btn btn-sm btn-outline-primary">Join</a>
                                         </div>
-                                        <small class="text-body-secondary">by {{ $guild->owner->name }}</small>
+                                        <small class="text-body-secondary">Online: 123</small>
                                         <small class="text-body-secondary">{{ $guild->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
@@ -43,7 +41,7 @@
                     @endforeach
 
                 </div>
-                {{ $guilds->links() }}
+                {{ $channels->links() }}
             </div>
         </div>
 
