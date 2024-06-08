@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
+
 </head>
 <body>
 
@@ -15,5 +16,6 @@
 <main>
     @yield('content')
 </main>
+@vite(['resources/js/app.js','resources/css/app.css'])
 </body>
 </html>

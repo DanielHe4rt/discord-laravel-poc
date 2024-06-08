@@ -21,3 +21,17 @@ id: uuid
 guild_id: uuid referenecs
 user_id:  uuid references
 messages_count: 
+
+
+## Next steps (tomorrow)
+
+- integrate channels
+  - member join
+  - member left
+  - message sent
+  - delete message
+- implement better visualization
+- implement pulse
+- add req/dto layers
+- write 1 fallback test for each case
+- 
