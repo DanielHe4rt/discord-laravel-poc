@@ -7,20 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('guilds', function (Blueprint $table) {
+        Schema::create('guild_channels', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('guild_id')->constrained('guilds');
             $table->string('name');
-            $table->foreignId('user_id');
-            $table->string('icon_url');
-            $table->integer('members_count')->default(0);
             $table->integer('messages_count')->default(0);
-            $table->boolean('is_nsfw');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('guilds');
+        Schema::dropIfExists('guild_channels');
     }
 };

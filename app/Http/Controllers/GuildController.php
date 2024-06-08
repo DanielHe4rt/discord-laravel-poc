@@ -24,6 +24,11 @@ class GuildController extends Controller
         ]);
     }
 
+    public function getGuild(Guild $guild)
+    {
+        // TODO: implement
+    }
+
     public function postGuild(Request $request): RedirectResponse
     {
 

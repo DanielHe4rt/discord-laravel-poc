@@ -37,6 +37,11 @@ class Guild extends Model
         return $this->hasMany(Member::class, 'guild_id');
     }
 
+    public function channels(): HasMany
+    {
+        return $this->hasMany(Channel::class, 'guild_id');
+    }
+
     public function incrementMembers(UnaryEnum $enum): bool
     {
         return match($enum) {
