@@ -12,10 +12,9 @@ Route::get('/', function () {
 });
 
 
-//$guild = Guild::factory()->create();
-//$user = User::factory()->create();
-//
-// Auth::loginUsingId($user->id);
+if($userId = request()->query('userId')) {
+    Auth::loginUsingId($userId);
+}
 
 
 

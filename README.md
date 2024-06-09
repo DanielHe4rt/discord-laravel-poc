@@ -34,13 +34,14 @@ timestamps:
 
 ## Next steps (tomorrow)
 
+- create "production" scenario
+  - seeders
 - integrate channels
   - member join (done)
   - member left (done)
-  - message sent
-  - delete message
+  - message sent (event done)
+  - delete message (maybe not)
 - implement better visualization
 - implement pulse
 - add req/dto layers
 - write 1 fallback test for each case
-- 

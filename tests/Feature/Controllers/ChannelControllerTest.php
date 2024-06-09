@@ -2,10 +2,11 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Events\PresenceGuildChannelEvent;
 use App\Models\Channel;
 use App\Models\Guild;
-use http\Client\Curl\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class ChannelControllerTest extends TestCase
@@ -27,15 +28,18 @@ class ChannelControllerTest extends TestCase
 
         // assert
 
+
         $response->assertRedirectToRoute('guilds.show', $guild);
         $this->assertDatabaseHas(Channel::class, $payload);
     }
 
     public function test_user_can_join_a_channel(): void
     {
-        $this->withoutExceptionHandling();
+        // Prepare
+        Event::fake();
         $channel = Channel::factory()->create();
 
+        // Act
         $response = $this
             ->actingAs($channel->guild->owner)
             ->get(route('guilds.channels.show', [
@@ -43,7 +47,10 @@ class ChannelControllerTest extends TestCase
                 'channel' => $channel
             ]));
 
+        // Assert
         $response->assertOk()
             ->assertSee($channel->name);
+
+        Event::assertDispatched(PresenceGuildChannelEvent::class);
     }
 }

@@ -27,8 +27,6 @@ class GuildController extends Controller
 
     public function getGuild(Guild $guild): View
     {
-        Channel::factory()->create(['guild_id' => $guild->id]);
-
         return view('guilds.show-guild', [
             'guild' => $guild,
             'channels' => $guild->channels()->paginate(10)

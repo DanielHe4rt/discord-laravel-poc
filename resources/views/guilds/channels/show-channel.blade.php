@@ -29,12 +29,7 @@
 
                     </div>
                     <div class="bg-white p-3 border-top">
-                        <form id="chatForm">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type a message..." aria-label="Message" aria-describedby="button-send">
-                                <button class="btn btn-primary" type="submit" id="button-send">Send</button>
-                            </div>
-                        </form>
+                        <x-chat-form/>
                     </div>
                 </div>
                 <div class="col-md-3 border-start">
