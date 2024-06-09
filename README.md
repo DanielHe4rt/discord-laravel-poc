@@ -23,11 +23,20 @@ user_id:  uuid references
 messages_count: 
 
 
+## Messages
+
+table: channel_messages
+
+channel_id:
+member_id:
+message: 
+timestamps:
+
 ## Next steps (tomorrow)
 
 - integrate channels
-  - member join
-  - member left
+  - member join (done)
+  - member left (done)
   - message sent
   - delete message
 - implement better visualization

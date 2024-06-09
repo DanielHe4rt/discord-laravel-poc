@@ -18,8 +18,8 @@ class GuildFactory extends Factory
             'updated_at' => Carbon::now(),
             'icon_url' => $this->faker->imageUrl(),
             'name' => $this->faker->name(),
-            'members_count' => $this->faker->randomNumber(),
-            'messages_count' => $this->faker->word(),
+            'members_count' => 0,
+            'messages_count' => 0,
             'is_nsfw' => $this->faker->boolean(),
 
             'user_id' => User::factory(),

@@ -2,17 +2,15 @@
 
 namespace App\Events;
 
-use App\Models\Member;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MemberChannelJoin implements ShouldBroadcastNow
+class PresenceGuildChannel implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,13 +33,12 @@ class MemberChannelJoin implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('room.' . $this->channel->getKey()),
+            new PresenceChannel('room.' . $this->channel->getKey()),
         ];
     }
 
     public function broadcastAs(): string
     {
-        return 'funciona';
-
+        return 'presence';
     }
 }

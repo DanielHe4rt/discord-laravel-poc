@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('guild_members', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->foreignUuid('guild_id');
             $table->foreignId('user_id');
             $table->integer('messages_count')->default(0);

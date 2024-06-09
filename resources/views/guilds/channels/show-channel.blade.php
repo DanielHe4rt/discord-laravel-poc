@@ -2,7 +2,7 @@
 
 @section('content')
     <main>
-        <input type="hidden" name="channelId" value="{{ $channel->getKey() }}">
+        <input type="hidden" id="channelId" value="{{ $channel->getKey() }}">
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
@@ -21,13 +21,11 @@
             <div class="row vh-70">
                 <div class="col-md-9 d-flex flex-column">
                     <div class="flex-grow-1 overflow-auto  p-3" id="chatMessages">
-                        @foreach(range(1,5) as $fodase)
-                            <p>
-                                <span>[00:00:00]</span>
-                                <span>danielhe4rt:</span>
-                                <span> vai caraio</span>
-                            </p>
-                        @endforeach
+                        <p>
+                            <span>{{ date('H:i:s') }}</span>
+                            <span>admin:</span>
+                            <span>you joined as {{ auth()->user()->name }}</span>
+                        </p>
 
                     </div>
                     <div class="bg-white p-3 border-top">
@@ -40,13 +38,8 @@
                     </div>
                 </div>
                 <div class="col-md-3 border-start">
-                    <div class="list-group list-group-flush">
-                        @foreach(range(1,5) as $fodase )
-                            <p href="#" class="list-group-item list-group-item-action m-0">
-                                <img src="https://github.com/danielhe4rt.png" width="50" class="rounded mx-2" alt="">
-                                danielhe4rt
-                            </p>
-                        @endforeach
+                    <div class="list-group list-group-flush" id="presenceList">
+
 
                         <!-- Add more users here -->
                     </div>

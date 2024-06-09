@@ -11,6 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 //$guild = Guild::factory()->create();
 //$user = User::factory()->create();
 //

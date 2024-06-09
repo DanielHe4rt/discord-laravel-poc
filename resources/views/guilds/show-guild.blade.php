@@ -30,7 +30,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="{{ route('guilds.channels.show', ['guild' => $guild, 'channel', $channel]) }}" type="button" class="btn btn-sm btn-outline-primary">Join</a>
+                                            <a href="{{ route('guilds.channels.show', ['guild' => $guild, 'channel', $channel->id]) }}" type="button" class="btn btn-sm btn-outline-primary">Join</a>
                                         </div>
                                         <small class="text-body-secondary">Online: 123</small>
                                         <small class="text-body-secondary">{{ $guild->created_at->diffForHumans() }}</small>

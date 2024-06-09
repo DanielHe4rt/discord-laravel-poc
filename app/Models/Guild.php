@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UnaryEnum;
 use App\Observers\GuildObserver;
+use App\Traits\MessageCountable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[ObservedBy(GuildObserver::class)]
 class Guild extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, MessageCountable;
 
     protected $fillable = [
         'id',
