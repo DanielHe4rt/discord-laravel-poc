@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PresenceGuildChannel;
+use App\Events\PresenceGuildChannelEvent;
 use App\Models\Channel;
 use App\Models\Guild;
 use App\Services\ChannelService;
@@ -25,7 +25,7 @@ class ChannelController extends Controller
 
     public function getChannel(Guild $guild, Channel $channel)
     {
-        PresenceGuildChannel::dispatch($channel, auth()->user());
+        PresenceGuildChannelEvent::dispatch($channel, auth()->user());
         return view('guilds.channels.show-channel', [
             'channel' => $channel,
             'guild' => $guild,

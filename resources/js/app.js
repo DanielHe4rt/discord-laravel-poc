@@ -20,10 +20,10 @@ const addUserPresence = (user_info) => {
     `;
 }
 
-const newMessage = (user, message) => {
+const newMessage = (user, message, timestamp) => {
     return `
         <p>
-            <span>${moment().format("h:mm:ss")}</span>
+            <span>${timestamp}</span>
             <span>${user}:</span>
             <span>${message}</span>
         </p>
@@ -38,20 +38,24 @@ $(document).ready(function () {
     const channelId = $("#channelId").val()
 
     Echo.join('room.' + channelId)
+        .listen('newMessage', function (event) {
+            console.log('chegou msg caraio boa d+')
+            console.log(event)
+        })
         .here((users) => {
             for(let user of users) {
                 presenceListEl.append(addUserPresence(user))
             }
-            chatEl.append(newMessage("admin", "user " + user.name + " joined"))
+            chatEl.append(newMessage("admin", "user " + user.name + " joined", "00:00:00"))
         })
         .joining((user) => {
             presenceListEl.append(addUserPresence(user))
-            chatEl.append(newMessage("admin", "user " + user.name + " joined"))
+            chatEl.append(newMessage("admin", "user " + user.name + " joined", "00:00:00"))
             console.log(user.name);
         })
         .leaving((user) => {
             $("#presence-" + user.id).remove()
-            chatEl.append(newMessage("admin", "user " + user.name + " left"))
+            chatEl.append(newMessage("admin", "user " + user.name + " left", "00:00:00"))
         })
         .error((error) => {
             console.error(error);

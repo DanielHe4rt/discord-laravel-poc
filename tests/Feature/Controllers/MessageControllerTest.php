@@ -2,12 +2,15 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Events\SendMessageEvent;
 use App\Models\Channel;
 use App\Models\Guild;
 use App\Models\Member;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
@@ -15,6 +18,7 @@ class MessageControllerTest extends TestCase
     use DatabaseMigrations;
     public function test_user_can_send_messages(): void
     {
+        Event::fake();
         $this->withoutExceptionHandling();
         // Prepare
         $user = User::factory()->create();
@@ -35,6 +39,11 @@ class MessageControllerTest extends TestCase
         $response->assertCreated()
             ->assertJsonFragment($payload);
 
+        Event::assertDispatched(
+            SendMessageEvent::class,
+            fn (SendMessageEvent $event) => $event->message->content == $payload['content']
+        );
+
         $this->assertDatabaseHas(Message::class, [
             'channel_id' => $channel->getKey(),
             'member_id' => $member->getKey(),
@@ -51,6 +60,5 @@ class MessageControllerTest extends TestCase
             'messages_count' => 1
         ]);
 
-        // TODO: broadcasting stuff.
     }
 }

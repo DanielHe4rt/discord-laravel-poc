@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\UnaryEnum;
+use App\Events\SendMessageEvent;
 use App\Models\Channel;
 use App\Models\Guild;
 use App\Models\Member;
@@ -17,6 +18,7 @@ class MessageService
         $payload = ['content' => $message, 'member_id' => $member->getKey()];
 
         $message = $channel->messages()->create($payload);
+        SendMessageEvent::dispatch($message);
 
         $member->handleMessageCount(UnaryEnum::Increment);
         $guild->handleMessageCount(UnaryEnum::Increment);
