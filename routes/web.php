@@ -1,9 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\V1\MessageController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\GuildController;
-use App\Models\Guild;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +27,11 @@ Route::prefix('guilds')
         Route::prefix('/{guild}/channels')->group(function () {
             Route::post('/', [ChannelController::class, 'postChannel'])->name('guilds.channels.store');
             Route::get('/{channel}', [ChannelController::class, 'getChannel'])->name('guilds.channels.show');
+
+            Route::post('{channel}/messages', [MessageController::class, 'postMessage'])
+                ->name('guilds.channels.messages.store')
+                ->middleware('auth:web');
         });
+
+
     });

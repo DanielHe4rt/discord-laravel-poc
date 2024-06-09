@@ -8,16 +8,15 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendMessageEvent
+class SendMessageEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
+
     public function __construct(public readonly Message $message)
     {
         //
@@ -31,7 +30,7 @@ class SendMessageEvent
     public function broadcastOn(): array
     {
         return [
-            new Channel('room-' . $this->message->channel_id),
+            new Channel('room.' . $this->message->channel_id),
         ];
     }
 
